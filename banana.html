@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupón San Valentín</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&family=Dancing+Script:wght@700&display=swap');
+
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4a4e69;
+            --text-color: #fff;
+            --accent-color: rgba(255, 117, 140, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        .night-sky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        .coupon-wrapper {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 3 / 2;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .coupon-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(233, 30, 99, 0.4);
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star-coupon {
+            position: absolute;
+            background-color: #fff;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkleCoupon 5s infinite;
+        }
+
+        @keyframes twinkleCoupon {
+            0%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+            50% { opacity: 1; transform: translateY(-10px) scale(1.5); }
+        }
+
+@keyframes myosotisFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(10deg); }
+}
+
+        .moon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: transparent;
+            box-shadow: 0.8rem 0 0 0 #fff;
+            z-index: 1;
+        }
+
+        .coupon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .serie {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+        }
+
+        .coupon-body {
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .description {
+            font-size: 1.75rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            z-index: 2;
+        }
+
+        .footer-date {
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .code-area {
+            position: absolute;
+            bottom: 5rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        #qrCode {
+            width: 6rem;
+            height: 6rem;
+            margin-bottom: 0.75rem;
+            border: 3px solid #fff;
+            border-radius: 10px;
+            padding: 0.25rem;
+            background-color: white;
+            position: relative;
+        }
+
+        #qrCode img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .barcode-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        #barcode {
+            width: 40%;
+            max-width: 100px;
+            height: auto;
+            margin-bottom: 0.25rem;
+        }
+
+        .number {
+            font-size: 0.875rem;
+            letter-spacing: 1px;
+            color: var(--secondary-color);
+            margin-top: 0.25rem;
+            font-weight: bold;
+        }
+
+        #downloadButton {
+            background-color: rgba(76, 175, 80, 0.7);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        #downloadButton:hover {
+            background-color: rgba(69, 160, 73, 0.9);
+        }
+
+        #downloadButton img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .love-text {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-family: 'Dancing Script', cursive;
+            z-index: 1;
+        }
+
+
+
+.reveal-button {
+    background-color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 50px;
+    color: var(--primary-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.reveal-button:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .coupon-content {
+            display: none;
+        }
+
+        #state-1:checked ~ .overlay {
+            display: block;
+        }
+
+        #state-1:checked ~ .coupon-wrapper .state-1-content {
+            display: flex;
+        }
+
+        #state-2:checked ~ .overlay {
+            display: none;
+        }
+
+        #state-2:checked ~ .coupon-wrapper .state-2-content {
+            display: flex;
+        }
+
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            transform: rotate(45deg);
+            animation: heartFloat 4s ease-in-out infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -5px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: -5px;
+        }
+
+        @keyframes heartFloat {
+            0%, 100% { transform: translateY(0) rotate(45deg); }
+            50% { transform: translateY(-20px) rotate(45deg); }
+        }
+
+        .myosotis {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 1;
+ animation: myosotisFloat 5s ease-in-out infinite;
+        }
+
+        .myosotis::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #87CEFA;
+            border-radius: 50%;
+        }
+
+        .myosotis::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #FFFF00;
+            border-radius: 50%;
+            top: 7px;
+            left: 7px;
+        }
+
+        .petal {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #87CEFA;
+            border-radius: 50% 0;
+            transform-origin: bottom right;
+        }
+
+        .petal:nth-child(1) { transform: rotate(0deg); }
+        .petal:nth-child(2) { transform: rotate(72deg); }
+        .petal:nth-child(3) { transform: rotate(144deg); }
+        .petal:nth-child(4) { transform: rotate(216deg); }
+        .petal:nth-child(5) { transform: rotate(288deg); }
+
+        .starry-night {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .swirl {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid #f7d952;
+            opacity: 0.5;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .coupon-wrapper {
+                padding: 1rem;
+                aspect-ratio: 2 / 3;
+                height: auto;
+                max-height: 90vh;
+                width: 90vw;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .description {
+                font-size: 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .serie {
+                font-size: 0.875rem;
+            }
+
+            .footer {
+                order: -1;
+                margin-top: 0;
+                margin-bottom: 1rem;
+            }
+
+            .love-text {
+                font-size: 1.5rem;
+                bottom: 1rem;
+            }
+
+            .number {
+                font-size: 0.75rem;
+            }
+
+            .code-area {
+                bottom: 4rem;
+                right: 50%;
+                transform: translateX(50%);
+                padding: 0.75rem;
+                flex-direction: row;
+                justify-content: space-between;
+                width: 90%;
+            }
+
+            #qrCode {
+                width: 4rem;
+                height: 4rem;
+                margin-bottom: 0;
+                margin-right: 0.5rem;
+            }
+
+            .barcode-section {
+                flex-grow: 1;
+                align-items: flex-start;
+            }
+
+            #barcode {
+                max-width: 100%;
+                height: auto;
+            }
+
+            #downloadButton {
+                font-size: 0.875rem;
+                padding: 0.4rem;
+                width: 2rem;
+                height: 2rem;
+                bottom: -1rem;
+                right: 50%;
+                transform: translateX(50%);
+            }
+
+            .moon {
+                width: 2.5rem;
+                height: 2.5rem;
+                box-shadow: 0.6rem 0 0 0 #fff;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+        }
+
+        @media (min-width: 601px) {
+    body {
+        padding: 2rem;
+    }
+
+    .coupon-wrapper {
+        max-width: 800px;
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto 1fr auto auto;
+        gap: 1rem;
+        padding: 2rem;
+    }
+
+    .coupon-header {
+        grid-column: 1 / -1;
+        grid-row: 1 / 2;
+    }
+
+    .coupon-body {
+        grid-column: 1;
+        grid-row: 2;
+        align-self: center;
+    }
+
+
+    .title {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .description {
+        font-size: 1.7rem;
+        margin-bottom: 1rem;
+    }
+
+    .code-area {
+        grid-column: 2 / 3;
+        grid-row: 2 / 4;
+        position: relative;
+        bottom: auto;
+        right: auto;
+        align-self: center;
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 1rem;
+        border-radius: 15px;
+    }
+
+    #qrCode {
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .barcode-section {
+        width: 100%;
+    }
+
+    #barcode {
+        width: 100%;
+        height: auto;
+    }
+
+        .footer {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .love-text {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .moon {
+        width: 3rem;
+        height: 3rem;
+        box-shadow: 0.8rem 0 0 0 #fff;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .hearts, .myosotis {
+        pointer-events: none;
+    }
+
+    .logo {
+        font-size: 2rem;
+    }
+
+    .serie {
+        font-size: 1.25rem;
+    }
+
+    .number {
+        font-size: 1rem;
+    }
+
+    #downloadButton {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        position: static;
+        margin-top: 1rem;
+    }
+}
+        }
+    </style>
+</head>
+<body>
+<input type="radio" name="state" id="state-1" checked>
+    <input type="radio" name="state" id="state-2">
+
+    <div class="overlay" id="overlay"></div>
+<div class="coupon-wrapper">
+        <div class="coupon-content state-1-content">
+            <label for="state-2" class="reveal-button">Abrir</label>
+        </div>
+        <div class="coupon-content state-2-content">
+
+    <div class="night-sky"></div>
+    <div class="starry-night"></div>
+    <div class="coupon-wrapper">
+        <div class="stars"></div>
+        <div class="moon"></div>
+        <div class="hearts"></div>
+
+        <div class="coupon-header">
+            <div class="logo">Cupón mágico</div>
+            <div class="serie" id="serie">AB002</div>
+        </div>
+        <div class="coupon-body">
+            <div class="title">Momentos de Magia</div>
+            <div class="description">Vale para un rato divertido conmigo.</div>
+        </div>
+        <div class="footer">
+            <div><span class="footer-date">Emisión:</span> 30 JUN. 2024</div>
+            <div><span class="footer-date">Validez:</span> 08 JUL. 2024</div>
+        </div>
+<div class="code-area">
+                <div id="qrCode"></div>
+                <div class="barcode-section">
+                    <svg id="barcode"></svg>
+                    <div class="number" id="barcodeNumber">123456789012</div>
+                </div>
+                <button id="downloadButton" title="Descargar cupón">
+                   
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="love-text">Tu Manchi</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            generateQRAndBarcode();
+            createStars();
+            createHearts();
+            createMyosotis();
+            createStarryNight();
+        });
+
+       function generateQRAndBarcode() {
+            var qrData = 'AMOR2024';
+            var barcodeText = '123456789012';
+
+            QRCode.toCanvas(document.getElementById("qrCode"), qrData, {
+                width: 100,
+                height: 100,
+                margin: 0,
+                color: {
+                    dark: "#000000",
+                    light: "#ffffff"
+                }
+            }, function (error) {
+                if (error) console.error(error);
+                console.log('QR code generado!');
+            });
+
+            JsBarcode("#barcode", barcodeText, {
+                format: "CODE128",
+                width: 2,
+                height: 40,
+                displayValue: false,
+                background: "transparent",
+                lineColor: "#000",
+                margin: 0
+            });
+            document.getElementById("barcodeNumber").textContent = barcodeText;
+        }
+
+        document.getElementById('downloadButton').addEventListener('click', function () {
+            downloadCoupon();
+        });
+
+        function downloadCoupon() {
+            html2canvas(document.querySelector(".coupon-wrapper"), {
+                scale: 3,
+                logging: false,
+                useCORS: true,
+                backgroundColor: null
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'cupon_san_valentin.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+
+        function createStars() {
+            const starsContainer = document.querySelector('.night-sky');
+            const couponStarsContainer = document.querySelector('.stars');
+            
+            for (let i = 0; i < 200; i++) {
+                createStar(starsContainer);
+            }
+
+            for (let i = 0; i < 100; i++) {
+                createStar(couponStarsContainer, 'star-coupon');
+            }
+        }
+
+        function createStar(container, className = 'star') {
+            const star = document.createElement('div');
+            star.className = className;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            container.appendChild(star);
+        }
+
+        function createHearts() {
+            const heartsContainer = document.querySelector('.hearts');
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.top = `${Math.random() * 100}%`;
+                heart.style.animationDelay = `${Math.random() * 4}s`;
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        function createMyosotis() {
+            const couponWrapper = document.querySelector('.coupon-wrapper');
+            for (let i = 0; i < 5; i++) {
+                const myosotis = document.createElement('div');
+                myosotis.className = 'myosotis';
+                myosotis.style.left = `${Math.random() * 100}%`;
+                myosotis.style.top = `${Math.random() * 100}%`;
+                for (let j = 0; j < 5; j++) {
+                    const petal = document.createElement('div');
+                    petal.className = 'petal';
+                    myosotis.appendChild(petal);
+                }
+                couponWrapper.appendChild(myosotis);
+            }
+        }
+
+        function createStarryNight() {
+            const starryNight = document.querySelector('.starry-night');
+            for (let i = 0; i < 5; i++) {
+                const swirl = document.createElement('div');
+                swirl.className = 'swirl';
+                swirl.style.width = `${Math.random() * 100 + 50}px`;
+                swirl.style.height = `${Math.random() * 100 + 50}px`;
+                swirl.style.left = `${Math.random() * 100}%`;
+                swirl.style.top = `${Math.random() * 100}%`;
+                swirl.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                starryNight.appendChild(swirl);
+            }
+        }
+
+        // Add a subtle parallax effect to stars and hearts
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.star, .star-coupon, .heart, .myosotis, .swirl');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            elements.forEach((element) => {
+                const speed = parseFloat(element.getAttribute('data-speed') || Math.random() * 0.5);
+                const x = (window.innerWidth - e.pageX * speed) / 100;
+                const y = (window.innerHeight - e.pageY * speed) / 100;
+                element.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Add a pulsating effect to the love text
+        const loveText = document.querySelector('.love-text');
+        setInterval(() => {
+            loveText.style.transform = 'translateX(-50%) scale(1.05)';
+            setTimeout(() => {
+                loveText.style.transform = 'translateX(-50%) scale(1)';
+            }, 500);
+        }, 2000);
+
+        // Add a floating animation to the moon
+        const moon = document.querySelector('.moon');
+        function animateMoon() {
+            moon.animate([
+                { transform: 'translateY(0px)' },
+                { transform: 'translateY(-10px)' },
+                { transform: 'translateY(0px)' }
+            ], {
+                duration: 4000,
+                iterations: Infinity,
+                easing: 'ease-in-out'
+            });
+        }
+        animateMoon();
+
+// Make QR code clickable
+        document.getElementById('qrCode').addEventListener('click', function() {
+            window.open('https://www.reydelapc.com', '_blank');
+        });
+    </script>
+</body>
+</html>
